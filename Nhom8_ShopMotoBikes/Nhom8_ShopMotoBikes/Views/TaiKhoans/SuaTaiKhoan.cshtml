@@ -1,0 +1,111 @@
+﻿@model Nhom8_ShopMotoBikes.Models.TaiKhoan
+@{
+    ViewBag.Title = "SuaTaiKhoan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- banner start -->
+<section id="breadcrumb-wrapper" class="breadcrumb-w-img" style="background-image: url(/wwwroot/img/products/bg1.jpg); ">
+
+    <div class="breadcrumb-overlay"></div>
+    <div class="breadcrumb-content">
+        <div class="wrapper">
+            <div style="text-align: center;">
+                <div class="breadcrumb-big">
+                    <h2>
+                        TÀI KHOẢN
+                    </h2>
+
+                </div>
+                <div class="breadcrumb-small">
+                    <a href="@Url.Action("Index","Home")" title="">TRANG CHỦ</a>
+
+
+                    <span aria-hidden="true">/</span>
+                    <span>SỬA TÀI KHOẢN</span>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner end -->
+<div class="grocino-form">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
+
+
+                <form method="post" action="@Url.Action("SuaTaiKhoan","TaiKhoans")" class="form-signin">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.MaTK, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(model => model.Quyen, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(model => model.TrangThai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="ui form">
+                        <div class="ui left icon input w-100 ">
+                            <h1 style="text-align: center;color:blue;width: 100%;border:rgb(94, 92, 92) solid 2px;border-radius: 4px;height:70px;padding-top: 18px;">SỬA TÀI KHOẢN</h1>
+
+                        </div><br /><br />
+
+                        @if (ViewBag.errorUpdateTaikhoan != null)
+                        {
+                            <div class="alert alert-danger mb-2 text-center" role="alert">
+                                @ViewBag.errorUpdateTaikhoan
+                            </div>
+                        }
+
+                        @Html.ValidationMessageFor(model => model.TenDN, "", new { @class = "text-danger" })
+                        <div class="ui left icon input w-100 field ">
+                            @Html.EditorFor(model => model.TenDN, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên đăng nhập" } })
+                        </div>
+
+                        @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                        <div class="ui left icon input w-100 field">
+                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control", placeholder = "Họ tên" } })
+                        </div>
+
+                        @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                        <div class="ui left icon input w-100 field">
+                            @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại" } })
+
+
+                        </div>
+
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <div class="ui left icon input w-100 field">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+
+
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-orange btn-block" type="submit">XÁC NHẬN</button>
+                    <div class="form-signin__link">
+                        <a href="@Url.Action("Index","Home")">
+                            <p style="font-size: 20px;color:red">Trở về</p>
+                        </a>
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}

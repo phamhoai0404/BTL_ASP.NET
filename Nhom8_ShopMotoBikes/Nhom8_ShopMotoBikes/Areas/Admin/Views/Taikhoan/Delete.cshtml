@@ -1,0 +1,112 @@
+﻿@model Nhom8_ShopMotoBikes.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Xóa tài khoản #" + Model.MaTK;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="chitiet2">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-4 text-left">
+                <b> Mã tài khoản:</b>
+            </div>
+            <div class="col-6 text-left">
+                @Html.DisplayFor(model => model.MaTK)
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-4 text-left">
+                <b> Họ và tên:</b>
+            </div>
+            <div class="col-6 text-left">
+                @Html.DisplayFor(model => model.HoTen)
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-4 text-left">
+                <b> Tên đăng nhập:</b>
+            </div>
+            <div class="col-6 text-left">
+                @Html.DisplayFor(model => model.TenDN)
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-4 text-left">
+                <b> Số điện thoại: </b>
+            </div>
+            <div class="col-6 text-left">
+                @Html.DisplayFor(model => model.SoDienThoai)
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-4 text-left">
+                <b> Email: </b>
+            </div>
+            <div class="col-6 text-left" style="color: unset;">
+                @Html.DisplayFor(model => model.Email)
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-4 text-left">
+                <b> Quyền </b>
+            </div>
+            <div class="col-6 text-left">
+                @{
+                    string quyen = "";
+                    if (Model.Quyen == true) { quyen = "Quản trị"; }
+                    else { quyen = "Khách hàng"; }
+
+                }
+
+                @quyen
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-4 text-left">
+                <b> Trạng thái: </b>
+            </div>
+            <div class="col-6 text-left">
+                @{
+                    string trangThai = "";
+                    if (Model.TrangThai == true) { trangThai = "Hoạt động"; }
+                    else { trangThai = "Đang bị khóa"; }
+
+                }
+
+                @trangThai
+            </div>
+        </div>
+
+
+        <div class="row mt-5 mb-3">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="col-md-offset-2 col-md-12 text-center">
+                    <button type="submit" class="btn btn-danger">
+                        Xóa
+                    </button> &nbsp; | &nbsp;
+
+                    @Html.ActionLink("Hủy", "Index")
+                </div>
+                <br />
+            }
+        </div>
+        <div class="row mt-3">
+            @if (ViewBag.ErrorDeleteTaikhoan != null)
+            {
+                <br />
+                <div class="alert alert-danger" role="alert">@ViewBag.ErrorDeleteTaikhoan</div>
+            }
+        </div>
+    </div>
+</div>

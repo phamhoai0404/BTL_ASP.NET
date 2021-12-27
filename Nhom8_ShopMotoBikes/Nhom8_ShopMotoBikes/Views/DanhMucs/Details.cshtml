@@ -1,0 +1,119 @@
+﻿
+@model PagedList.IPagedList<Nhom8_ShopMotoBikes.Models.Hang>
+@using PagedList.Mvc;
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="breadcrumb-wrapper" class="breadcrumb-w-img" style="background-image: url(../../wwwroot/img/products/bg1.jpg); ">
+
+    <div class="breadcrumb-overlay"></div>
+    <div class="breadcrumb-content">
+        <div class="wrapper">
+            <div style="text-align: center;">
+                <div class="breadcrumb-big">
+                    <h2>
+                        @ViewBag.DanhMuc.TenDM
+                    </h2>
+
+                </div>
+                <div class="breadcrumb-small">
+                    <a href="index.html" title="Quay trở về trang chủ">TRANG CHỦ</a>
+                    <span aria-hidden="true">/</span>
+                    <span> @ViewBag.DanhMuc.TenDM  </span>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner end -->
+<!-- category-section1 start here -->
+<div class="category-section1">
+    <div class="container">
+        <div class="home-section-head">
+            <h2 class="section-title">
+                <span>SẢN PHẨM</span>
+            </h2>
+        </div>
+        <div class="home-section-body">
+            <div class="section-desc">
+                Cùng tham quan các sản phẩm nỏi bật mới nhất của chúng tôi
+            </div>
+
+        </div>
+        <!-- category-filter start here -->
+        <div id="category-filter">
+            <div class="row">
+                <div class="row filter-products">
+                    
+                    @foreach (var item in Model)
+                    {
+                        <div class="product-layout product-grid col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                            <div class="product-holder product-thumb">
+                                <div class="image">
+                                    <a href="@Url.Action("Details","Hangs",  new { id = item.MaHang })">
+                                        <div class="img-product" style="width: 308.5px; margin-right: 170px;">
+                                            @{
+                                                string ImagePath = "";
+                                                if (item.Anh != null) { ImagePath = "~/wwwroot/img/sanpham/" + item.Anh; }
+                                                else { ImagePath = "~/wwwroot/img/sanpham/no-image-news.png"; }
+                                            }
+                                            <img src="@Url.Content(ImagePath)" class="img-fluid" alt="Product Image" style="height: 220.44px;" />
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="p-content">
+                                    <div class="p-title"> <a href="@Url.Action("Details","Hangs",  new { id = item.MaHang })"> @item.TenHang </a></div><hr>
+                                    <div class="p-price" style="color: red; font-weight:bolder;">
+
+                                        @string.Format("{0:#,##}", item.GiaTien) <u>đ</u>
+
+                                    </div>
+                                    <div class="p-buttonarea">
+                                        @if (item.SoLuong > 0)
+                                        {
+                                            <a href=@Url.Action("ThemGioHang", "GioHang", new { iMaHang = item.MaHang, strURL = Request.Url.ToString() }) class="btn btn-pcart">
+
+                                                <img src="~/wwwroot/img/home/right-arrow.png" class="arrow-left" alt="Arrow Left" /> THÊM VÀO GIỎ
+
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="" onclick="hoaanh()" class="btn btn-pcart">
+
+                                                <img src="~/wwwroot/img/home/right-arrow.png" class="arrow-left" alt="Arrow Left" /> THÊM VÀO GIỎ
+
+                                            </a>
+                                        }
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+
+                @Html.PagedListPager(Model, page => Url.Action("Details", new { page }), new PagedListRenderOptions()
+               {
+                   UlElementClasses = new string[] { "store-pagination" },
+               });
+            </div>
+            <br />
+        </div>
+        <!-- category-filter start here -->
+    </div>
+</div>
+
+
+
+
+

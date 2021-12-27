@@ -1,0 +1,154 @@
+﻿@using Nhom8_ShopMotoBikes.Models;
+@model List<GioHang>
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- banner start -->
+<section id="breadcrumb-wrapper" class="breadcrumb-w-img" style="background-image: url(/wwwroot/img/products/bg1.jpg); ">
+
+    <div class="breadcrumb-overlay"></div>
+    <div class="breadcrumb-content">
+        <div class="wrapper">
+            <div style="text-align: center;">
+                <div class="breadcrumb-big">
+                    <h2>
+                        GIỎ HÀNG
+                    </h2>
+
+                </div>
+                <div class="breadcrumb-small">
+                    <a href="@Url.Action("Index","Home")" title="">TRANG CHỦ</a>
+
+
+                    <span aria-hidden="true">/</span>
+                    <span>GIỎ HÀNG</span>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner end -->
+<!-- cart section start here -->
+
+<div class="cart-section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-12">
+
+                <div class="table-responsive">
+                    <h1 style=" color: black; ">Chi tiết giỏ hàng: </h1>
+
+                    @if (Model.Count > 0)
+                    {
+                
+                    <div style="display: flex; justify-content: space-between;">
+                        <button style=" position:fix; font-size: 20px; color: black; text-align: center; margin: 0 auto; padding: 10px 10px; border-radius:5px; border: unset; background-color: red;">
+                            <a href="@Url.Action("XoaTatCaGioHang","Giohang")">Xóa tất cả giỏ hàng</a>
+                        </button>
+                        <div>
+                            <label style="color: black; font-size: 18px; ">Địa chỉ giao hàng: </label>
+
+                            <textarea rows="3" class="form-control" name="txtDiaChi"></textarea>
+                        </div>
+                    </div>
+
+                    <table class="table table-borderless">
+
+                        <thead>
+
+                            <tr>
+
+                                <th style="width: 100px;">Mã sản phẩm</th>
+
+                                <th>Hình ảnh</th>
+
+                                <th>Tên sản phẩm</th>
+
+                                <th>Số lượng</th>
+
+                                <th>Đơn giá</th>
+
+                                <th>Thành tiền</th>
+
+                                <th style="width: 60px !important;">Hành động</th>
+
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="tr_product" style=" text-align: center; ">
+
+                                <td style=" text-align: center;">@item.iMaHang</td>
+                                <td style=" text-align: center;">
+
+                                    @{
+                                        string ImagePath = "";
+                                        if (item.sAnh != null) { ImagePath = "~/wwwroot/img/sanpham/" + item.sAnh; }
+                                        else { ImagePath = "~/wwwroot/img/sanpham/no-image-news.png"; }
+                                    }
+                                    <img src="@Url.Content(ImagePath)" width="60" class="img-thumbnail" />
+
+                                </td>
+
+                                <td style=" text-align: center;">@item.sTenHang</td>
+
+
+
+                                @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @MaHang = item.iMaHang }))
+                                {
+                                    <td style=" text-align: center;" class="nhapdulieu">
+                                        <input type="number" min="1" name="txtSoLuongDat" value="@item.iSoLuong" style="width: 50px; text-align: center" />
+
+
+                                    </td>
+                                    <td style=" text-align: center;">@String.Format("{0:0,0}", item.dDonGia)</td>
+                                    <td style=" text-align: center;">@String.Format("{0:0,0}", item.dThanhTien)</td>
+
+                                    <td style="">
+                                        <div style="display: flex;  justify-content: space-around">
+                                            <a href="@Url.Action("Details","Hangs",  new { id = item.iMaHang })" style="background-color: unset; border: unset;" class="btn btn-danger btn-sm" title="Xem chi tiết"><i style=" font-size: 25px; color: blue; " class="far fa-eye"></i></a>
+                                            <button type="submit" style="background-color: unset; border: unset;" class="btn btn-danger btn-sm" title="Sửa số lượng"><i style=" font-size: 25px; color: goldenrod; " class="far fa-edit"></i></button>
+                                            <a href="@Url.Action("XoaGioHang",new { iMaHang = item.iMaHang})" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng ?');" style="background-color: unset; border: unset;" class="btn btn-danger btn-sm" title="Xóa khỏi giỏ hàng"><i style=" font-size: 25px; color: red; " class="fas fa-times"></i></a>
+                                        </div>
+
+
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                        <tr style="text-align:right; font-weight: bold">
+                            <td colspan="5"></td>
+                            <td style="text-align: center; color: black; font-size: 18px;">Tổng tiền: </td>
+                            <td style="text-align: right; color: black; font-size: 18px;"> @String.Format("{0:0,0}", ViewBag.TongTien) VNĐ</td>
+                        </tr>
+                        <tr style="border-top: none;">
+                            <td colspan="2">
+                            </td>
+                            <td colspan="3">
+                               <a href="@Url.Action("DatHang","DonHang" , new { tongtien = ViewBag.TongTien }))" class="btn btn-block btn-orange" href="" style="height: 70px; font-size: 20px; line-height: 65px;">Đặt hàng</a>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </table>
+
+           
+                    }
+                    else
+                    {
+                        <h3 style="color: red; text-align: center;">Không tồn tại sản phẩm nào trong giỏ hàng!</h3>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

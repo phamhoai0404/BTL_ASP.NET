@@ -1,0 +1,185 @@
+﻿@model  Nhom8_ShopMotoBikes.Models.TaiKhoan
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="breadcrumb-wrapper" class="breadcrumb-w-img" style="background-image: url(/wwwroot/img/products/bg1.jpg); ">
+
+    <div class="breadcrumb-overlay"></div>
+    <div class="breadcrumb-content">
+        <div class="wrapper">
+            <div style="text-align: center;">
+                <div class="breadcrumb-big">
+                    <h2>
+                        TÀI KHOẢN
+                    </h2>
+
+                </div>
+                <div class="breadcrumb-small">
+                    <a href="@Url.Action("Index","Home")" title="">TRANG CHỦ</a>
+
+
+                    <span aria-hidden="true">/</span>
+                    <span>THÔNG TIN TÀI KHOẢN</span>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="grocino-form">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
+                <form class="form-signin">
+
+                    <div class="ui form">
+                        <div class="ui left icon input w-100 ">
+                            <h1 style="text-align: center;color:blue;border:rgb(94, 92, 92) solid 2px;border-radius: 4px;height:70px;padding-top: 18px;width:100%">THÔNG TIN TÀI KHOẢN</h1>
+
+                        </div>
+                        <br /><br />
+                        <div style="border: 1px solid black; padding-top: 30px; padding-bottom: 30px; border-radius:5px ">
+                            <div class="w-100 row field">
+                                <div class="col-3"></div>
+                                <div class="col-3">
+                                    <label for="name" style="color:black; font-size:18px;">Tên đăng nhập: </label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="name" style="color:black; font-size:18px;">@Model.TenDN</label>
+                                </div>
+
+                            </div>
+                            <div class="w-100 row field">
+                                <div class="col-3"></div>
+                                <div class="col-3">
+                                    <label for="name" style="color:black; font-size:18px;">Họ tên: </label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="name" style="color:black; font-size:18px;">@Model.HoTen</label>
+                                </div>
+
+                            </div>
+                            <div class="w-100 row field">
+                                <div class="col-3"></div>
+                                <div class="col-3">
+                                    <label for="name" style="color:black; font-size:18px;">Số điện thoại:</label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="name" style="color:black; font-size:18px;">@Model.SoDienThoai</label>
+                                </div>
+
+                            </div>
+                            <div class="w-100 row field">
+                                <div class="col-3"></div>
+                                <div class="col-3">
+                                    <label for="name" style="color:black; font-size:18px;">Email:</label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="name" style="color:black; font-size:18px;">@Model.Email</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div style="margin: 0 auto; width: 80%; ">
+    <h2 style="color: black;">Lịch sử đặt hàng</h2><br />
+    @if (ViewBag.listDonHangByMaTK.Count != 0)
+    {
+        <table class="table table-bordered" style="margin-left: 0px; width:100%;">
+            <thead>
+                <tr style="text-align: center;font-size:20px">
+                    <th scope="col" width="150px;">Mã đơn hàng</th>
+                    <th scope="col">Địa chỉ giao hàng</th>
+                    <th scope="col">Tổng tiền</th>
+                    <th scope="col" width="150px;">Ngày đặt</th>
+                    <th scope="col" width="150px;">Trạng thái</th>
+                    <th scope="col" width="150px;">Hành động</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < ViewBag.listDonHangByMaTK.Count; i++)
+                {
+                    <tr style="font-size:18px">
+                        <td class="product-thumbnail" style="text-align: center; padding-top: 20px;">
+                            <a><span class="unit-amount"> @ViewBag.listDonHangByMaTK[i].MaDH</span></a>
+                        </td>
+                        <td class="product-name" style="text-align: center; padding-top: 20px;">
+                            <h6>@ViewBag.listDonHangByMaTK[i].DiaChiGiaoHang</h6><br>
+                        </td>
+                        <td class="product-subtotal" style="text-align: center; padding-top: 20px;">
+                            <h6>@string.Format("{0:#,##}", ViewBag.listDonHangByMaTK[i].TongTien) VND</h6><br>
+                        </td>
+                        <td class="product-subtotal" style="text-align: center; padding-top: 20px;">
+                            <h6 class="subtotal-amount"> @string.Format("{0:dd/MM/yyyy}", @ViewBag.listDonHangByMaTK[i].NgayDat)</h6>
+                        </td>
+                        <td class="product-name" style="text-align: center; padding-top: 20px;">
+                            <h6>
+                              
+                                @{
+                                    string tinhTrang = "";
+                                    if (ViewBag.listDonHangByMaTK[i].TinhTrangDH == 1) { tinhTrang = "Đang giao"; }
+                                    else if (ViewBag.listDonHangByMaTK[i].TinhTrangDH == 2) { tinhTrang = "Đã giao"; }
+                                    else { tinhTrang = "Đã hủy"; }
+                                }
+                                @tinhTrang
+                            </h6>
+                        </td>
+                        <td class="product-name" style="text-align: center; padding-top: 20px;">
+                            <a href="@Url.Action("Index","DonHang",new {id = @ViewBag.listDonHangByMaTK[i].MaDH })"><span style="font-size:18px"> <i style="color:red;" class="fas fa-eye"></i> Xem Chi tiết</span><br>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <hr />
+        <h1 style="width:100%;color:red; text-align: center; ">Bạn Chưa có đơn hàng nào !</h1>
+        <hr />
+    }
+</div>
+
+<div class="form-signin__link" style="margin-top:20px">
+    <a href="@Url.Action("SuaTaiKhoan","TaiKhoans")">
+        <p style="font-size: 20px;color:red">Sửa tài khoản</p>
+    </a>
+</div>
+
+<div class="form-signin__link">
+    <a href="@Url.Action("SuaMatKhau","TaiKhoans")">
+        <p style="font-size: 20px;color:red">Đổi mật khẩu</p>
+    </a>
+</div>
+
+<div class="form-signin__link">
+    <a href="@Url.Action("Index","Home")">
+        <p style="font-size: 20px;color:red">Trở về</p>
+    </a>
+</div>
+
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}
+

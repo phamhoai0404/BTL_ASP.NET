@@ -1,0 +1,143 @@
+﻿@model  Nhom8_ShopMotoBikes.Models.Hang
+
+@{
+    ViewBag.Title = Model.TenHang;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- banner start -->
+<section id="breadcrumb-wrapper" class="breadcrumb-w-img" style="background-image: url(../../wwwroot/img/products/bg1.jpg); ">
+
+    <div class="breadcrumb-overlay"></div>
+    <div class="breadcrumb-content">
+        <div class="wrapper">
+            <div style="text-align: center;">
+                <div class="breadcrumb-big">
+                    <h2>
+                        @Model.TenHang
+                    </h2>
+
+                </div>
+                <div class="breadcrumb-small">
+                    <a href="index.html" title="Quay trở về trang chủ">TRANG CHỦ</a>
+
+
+                    <span aria-hidden="true">/</span>
+
+
+                    <a href="xemhangtheodanhmuc.html" title="">@Model.DanhMuc.TenDM</a>
+
+
+                    <span aria-hidden="true">/</span>
+                    <span> @Model.TenHang</span>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner end -->
+<!-- Product details page start here -->
+
+<div class="product_details">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-4" style="margin: 0 0 0 200px;">
+
+                <div class="detail_left">
+
+                    <div class="zoom-in">
+
+                        <a href="#">
+                            @{
+                                string ImagePath = "";
+                                if (Model.Anh != null) { ImagePath = "~/wwwroot/img/sanpham/" + Model.Anh; }
+                                else { ImagePath = "~/wwwroot/img/sanpham/no-image-news.png"; }
+                            }
+                            <img src="@Url.Content(ImagePath)" class="img-fluid" alt="Product Image" />
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-8" style="margin: 0 -300px 0 40px;">
+
+                <div class="detail_right">
+
+                    <h1 style="color: blue;"> @Model.TenHang</h1>
+                    <p style="color: red; font-size:25px; font-weight:bold;">  @string.Format("{0:#,##}", Model.GiaTien)  <u>đ</u></p>
+
+                    <p>Thương hiệu: <span style="color: red;">@Model.ThuongHieu</span></p>
+                    <p>Loại: <span style="color: red;">@Model.LoaiXe</span></p>
+                    <p>
+                        Tình trạng: <span style="color: red;">
+                            @{
+                                int sl = Model.SoLuong;
+                                var tt = sl > 0 ? "Còn hàng" : "Hết hàng";
+                            }
+                            @tt
+                        </span>
+                    </p>
+                    <p>Màu sắc: <span style="color: black;">@Model.MauSac</span></p>
+                    @if (Model.SoLuong > 0)
+                    {
+                        <span class="gop">
+                            <div class="btn-area">
+
+                                <a href=@Url.Action("ThemGioHang", "GioHang", new { iMaHang = Model.MaHang, strURL = Request.Url.ToString()}) class="btn btn-pcart">
+
+                                    <img src="~/wwwroot/img/home/right-arrow.png" class="arrow-left" alt="Arrow Left"> THÊM VÀO GIỎ
+
+                                </a>
+
+                            </div>
+                        </span>
+
+                    }
+                    else
+                    {
+                        <span class="gop">
+                            <div class="btn-area" onclick="hoaanh()">
+
+                                <a href=@Url.Action("ThemGioHang", "GioHang", new { iMaHang = Model.MaHang, strURL = Request.Url.ToString()}) class="btn btn-pcart">
+
+                                    <img src="~/wwwroot/img/home/right-arrow.png" class="arrow-left" alt="Arrow Left"> THÊM VÀO GIỎ
+
+                                </a>
+
+                            </div>
+                        </span>
+                    }
+
+
+
+
+                    <!-- row -->
+                </div>
+
+            </div>
+            <div style="margin-left: 160px;">
+                <br><hr>
+                <span style="color: red; text-align: center; font-size: 20px; font-weight: 500; box-sizing:border-box; width: 20px;">MÔ TẢ SẢN PHẨM</span><br>
+                <p style="text-align: justify; color: black; width: 1000px; margin: 20px 50px;">
+                     @Model.MoTaHang
+                </p>
+                <hr>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+

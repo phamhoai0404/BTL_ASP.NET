@@ -1,0 +1,108 @@
+﻿@model Nhom8_ShopMotoBikes.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Sửa tài khoản " + Model.HoTen;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="chitiet" style="width: 450px !important">
+    @using (Html.BeginForm("Edit", "Taikhoan", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MaTK)
+        @Html.HiddenFor(model => model.MatKhau)
+        @Html.HiddenFor(model => model.TrangThai)
+
+        <div class="form-group">
+            <b>Họ và tên:</b>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <b>Tên đăng nhập:</b>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.TenDN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.TenDN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <b>Số điện thoại:</b>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <b>Email:</b>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <b>Trạng Thái: </b>
+            @{
+                string trangThai = "";
+                if (Model.TrangThai == true)
+                {
+                    trangThai = "Đang hoạt động";
+                }
+                else
+                {
+                    trangThai = "Đang bị khóa";
+                }
+            }
+            @trangThai
+
+        </div>
+
+        <div class="form-group mt-2">
+            <b>Quyền: </b>
+            <div class="col-md-12 mt-2">
+                <select id="Quyen" name="QuyenTaiKhoan" class="form-control">
+                    @for (int i = 0; i < ViewBag.CacQuyen.Count; i++)
+                    {
+                        bool k = true;
+                        if (i == 0) { k = false; }
+
+                        if (@Model.Quyen == k)
+                        {
+                            <option value="@i" selected>@ViewBag.CacQuyen[i]</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@ViewBag.CacQuyen[i]</option>
+                        }
+
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group mt-5">
+            <div class="col-md-offset-2 col-md-12 text-center">
+                <button type="submit" class="btn btn-warning">
+                    Sửa
+                </button> &nbsp; | &nbsp;
+
+                @Html.ActionLink("Hủy", "Index")
+            </div>
+            <br />
+        </div>
+    </div>
+    }
+
+</div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
