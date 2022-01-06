@@ -61,6 +61,7 @@ namespace Nhom8_ShopMotoBikes.Controllers
             }
             return iTongTien;
         }
+
         public ActionResult Index()
         {
             List<GioHang> lstGioHang = Laygiohang();

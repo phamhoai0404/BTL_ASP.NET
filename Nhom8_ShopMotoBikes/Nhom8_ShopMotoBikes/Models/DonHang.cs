@@ -18,7 +18,8 @@
         [Key]
         public int MaDH { get; set; }
 
-        
+        //Dòng này là định dạng chỉ hiện thị kiểu ngày mà không hiển thị thời gian
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)] 
         public DateTime NgayDat { get; set; }
 
         [Column(TypeName = "ntext")]

@@ -51,7 +51,9 @@ namespace Nhom8_ShopMotoBikes.Areas.Admin.Controllers
 
             user.TrangThai = !user.TrangThai;
 
+
             db.Configuration.ValidateOnSaveEnabled = false;
+
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
 

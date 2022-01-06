@@ -22,10 +22,10 @@ namespace Nhom8_ShopMotoBikes.Controllers
 
                 DonHang donHang = db.DonHangs.Find(id);
 
-                /*if (donHang == null)
+                if (donHang == null)
                 {
                     return Redirect("/TaiKhoans/ThongTin");
-                }*/
+                }
 
                 TaiKhoan taiKhoan = Session["user"] as TaiKhoan;
               
@@ -56,15 +56,10 @@ namespace Nhom8_ShopMotoBikes.Controllers
             }
         }
 
-        public ActionResult DatHang(int? tongtien)
+        public ActionResult DatHang(decimal? tongtien)
         {
             if (Session["user"] != null)
             {
-                /*string diachi = frm["txtDiaChi"];
-                if(diachi == null || diachi == "")
-                {
-                    return Redirect("/GioHang/Index");
-                }*/
                 if (tongtien == null || tongtien == 0)
                 {
                     return Redirect("/GioHang/Index");
@@ -89,25 +84,28 @@ namespace Nhom8_ShopMotoBikes.Controllers
                     for( int i = 0; i< list.Count;i++)
                     {
                         ChiTietDonHang ct = new ChiTietDonHang();
-                        Hang sanpham = db.Hangs.Single(n => n.MaHang == ct.MaHang);
-                        
                         ct.MaDH = maDonHang;
                         ct.MaHang = list[i].iMaHang;
                         ct.SoLuongDat = list[i].iSoLuong;
 
-                        sanpham.SoLuong -= ct.SoLuongDat;
+                        //Xóa đi ở bảng hàng khi đã vào đơn hàng của khách hàng
+                        Hang sanpham = db.Hangs.Single(n => n.MaHang == ct.MaHang);
+                        sanpham.SoLuong = sanpham.SoLuong - ct.SoLuongDat;
                         db.Entry(sanpham).State = EntityState.Modified;
 
                         db.ChiTietDonHangs.Add(ct);
                     }
+
+                    //Xóa giỏ hàng
+                    List<GioHang> lstGioHang = Laygiohang();
+                    lstGioHang.Clear();
+
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.SaveChanges();
 
 
-                    return RedirectToAction("Index", "DonHang", new { id = donhang.MaDH }) ;
-
+                    return RedirectToAction("Index", "DonHang", new { id = donhang.MaDH });
                 }
-
             }
             else
             {
